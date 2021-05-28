@@ -1,10 +1,10 @@
 # Project Name
 
 **Author**: Haneen Abonser
-**Version**: 1.0.0 
+**Version**: 2.0.0 
 
 ## Overview
-This website is for getting the location for any city you want.
+This website is for getting the location and the weather data for three days for any city you want.
 
 ## Getting Started
 If you want to have the location for a city just enter the city name and click on Explore!
@@ -21,12 +21,12 @@ If you want to have the location for a city just enter the city name and click o
 
 **Time Estimate**            
 
-Name of feature: Hitting locationIQ and get the data.
+Name of feature: Hitting locationIQ and waether to get the data and render them.
 
-Estimate of time needed to complete: 6 hours
+Estimate of time needed to complete: hours
 
-Start time: 2pm 
+Start time: 4pm (first day) 
 
-Finish time: 10pm 
+Finish time: 4pm (second day)
 
-Actual time needed to complete: 8 hours
+Actual time needed to complete: 2 days.

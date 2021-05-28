@@ -1,5 +1,12 @@
 import React from 'react';
 import axios from 'axios';
+import Weather from './Weather.js';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+import Alert from 'react-bootstrap/Alert';
+
 
 
 class App extends React.Component {
@@ -10,7 +17,11 @@ class App extends React.Component {
       searchQuery: '',
       locationData: '',
       showMap: false,
-      errorMessage: false
+      errorMessage: false,
+      lon: '',
+      lat: '',
+      weatherData: [],
+      showWeather: false
     }
   }
 
@@ -23,52 +34,89 @@ class App extends React.Component {
 
   getCityLoc = async (event) => {
     event.preventDefault();
-    let locUrl = `https://eu1.locationiq.com/v1/search.php?key=pk.f5fac729640499d87d250ea054dc2ad1&q=${this.state.searchQuery}&format=json`;
+    let serverRoute = process.env.REACT_APP_SERVER;
 
+    // for Location data 
     try {
-
+      let locUrl = `https://eu1.locationiq.com/v1/search.php?key=pk.f5fac729640499d87d250ea054dc2ad1&q=${this.state.searchQuery}&format=json`;
       let result = await axios.get(locUrl);
       this.setState({
         locationData: result.data[0],
         showMap: true,
+        errorMessage: false,
+        lon: result.data[0].lon,
+        lat: result.data[0].lat,
       });
 
     } catch {
       this.setState({
-        showLocation: false,
+        showMap: false,
         errorMessage: true
-      })
+      });
 
-    }
-  }
+    };
+
+    // for weather data
+    try {
+      let url = `${serverRoute}/weather?cityName=${this.state.searchQuery}`
+      let resultData = await axios.get(url);
+      console.log(url);
+      console.log(resultData);
+      // console.log(resultDat);
+      this.setState({
+        weatherData: resultData.data,
+        showWeather: true
+      });
+
+    } catch (error) {
+      this.setState({
+        weatherData: error.respose,
+        showWeather: false
+
+      });
+    };
+  };
 
 
   render() {
     return (
       <>
-        <h1>City Explorer</h1>
-        <form onSubmit={this.getCityLoc} >
-          <input type='text' placeholder='Enter a city name' onChange={this.updateSearchQuery} />
-          <input type='submit' value='Explore!' />
-        </form>
-        <p>{this.state.locationData.display_name}</p>
+        <h1 style={{textAlign:'center'}}>City Explorer</h1>
+        <Form onSubmit={this.getCityLoc} style={{textAlign:'center'}}>
+          <Form.Group controlId="formBasicEmail">
+            <Form.Control type="text" placeholder="Enter a city name" onChange={this.updateSearchQuery} style={{marginTop:'25px'},{textAlign:'center'}}/>
+          </Form.Group>
+          <Button variant="primary" type="submit" style={{marginTop:'25px'}}>
+            Explore!
+          </Button>
+        </Form>
 
-        {this.state.showMap && 
-        
-        <img 
-        src={`https://maps.locationiq.com/v3/staticmap?key=pk.9d61ed09f54a2a10035cdf02333644df&center=${this.state.locationData.lat},${this.state.locationData.lon}`}
-        alt={this.state.locationData.display_name}
-        />
+        {this.state.showMap &&
+          <Card style={{ width: '18rem' }}>
+            <Card.Img variant="top" src={`https://maps.locationiq.com/v3/staticmap?key=pk.9d61ed09f54a2a10035cdf02333644df&center=${this.state.locationData.lat},${this.state.locationData.lon}`} alt={this.state.locationData.display_name} />
+
+            <Card.Body style={{textAlign:'center'}}>
+              <Card.Title>{this.state.locationData.display_name}</Card.Title>
+              <Card.Text>
+                {this.state.locationData.lat} <br></br>
+                {this.state.locationData.lon}
+              </Card.Text>
+            </Card.Body>
+          </Card>
         }
-        
-      {this.state.errorMessage &&
-        <p>Data is not found</p>
-      }
+
+        {this.state.errorMessage &&
+          <Alert variant="danger">
+            The data for this city not found
+          </Alert>
+        }
+
+        <Weather weatherData={this.state.weatherData} showWeather={this.state.showWeather} />
 
       </>
     )
   }
 
-}
+};
 
 export default App;
