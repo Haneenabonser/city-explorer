@@ -1,10 +1,10 @@
 # Project Name
 
 **Author**: Haneen Abonser
-**Version**: 2.0.0 
+**Version**: 3.0.0 
 
 ## Overview
-This website is for getting the location and the weather data for three days for any city you want.
+This website is for getting the location and the weather data for three days for any city you want, also you can find the top movie in this city.
 
 ## Getting Started
 If you want to have the location for a city just enter the city name and click on Explore!
@@ -21,12 +21,12 @@ If you want to have the location for a city just enter the city name and click o
 
 **Time Estimate**            
 
-Name of feature: Hitting locationIQ and waether to get the data and render them.
+Name of feature: Hitting locationIQ,waetherAPI and moviesAPI to get the data and render them.
 
-Estimate of time needed to complete: hours
+Estimate of time needed to complete: 8 hours
 
-Start time: 4pm (first day) 
+Start time: 5pm 
 
-Finish time: 4pm (second day)
+Finish time: 11pm 
 
-Actual time needed to complete: 2 days.
+Actual time needed to complete: 6 hours.
