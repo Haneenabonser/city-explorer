@@ -6,6 +6,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Alert from 'react-bootstrap/Alert';
+import Movie from './Movie.js';
 
 
 
@@ -21,7 +22,9 @@ class App extends React.Component {
       lon: '',
       lat: '',
       weatherData: [],
-      showWeather: false
+      showWeather: false,
+      movieData: [],
+      showMovie: false
     }
   }
 
@@ -58,11 +61,10 @@ class App extends React.Component {
 
     // for weather data
     try {
-      let url = `${serverRoute}/weather?cityName=${this.state.searchQuery}`
+      let url = `${serverRoute}/weather?city=${this.state.searchQuery}`
       let resultData = await axios.get(url);
       console.log(url);
       console.log(resultData);
-      // console.log(resultDat);
       this.setState({
         weatherData: resultData.data,
         showWeather: true
@@ -75,18 +77,42 @@ class App extends React.Component {
 
       });
     };
+
+
+    //  for movies data
+    try {
+      let movieUrl = `${serverRoute}/movie?query=${this.state.searchQuery}`
+      let movieResult = await axios.get(movieUrl);
+      // console.log(movieUrl);
+      // console.log(movieResult);
+      // console.log(resultDat);
+      this.setState({
+        movieData: movieResult.data,
+        showMovie: true
+      });
+
+    } catch (error) {
+      this.setState({
+        movieData: error.respose,
+        showMovie: false
+
+      });
+    };
+
+
+
   };
 
 
   render() {
     return (
       <>
-        <h1 style={{textAlign:'center'}}>City Explorer</h1>
-        <Form onSubmit={this.getCityLoc} style={{textAlign:'center'}}>
+        <h1 style={{ textAlign: 'center' }}>City Explorer</h1>
+        <Form onSubmit={this.getCityLoc} style={{ textAlign: 'center' }}>
           <Form.Group controlId="formBasicEmail">
-            <Form.Control type="text" placeholder="Enter a city name" onChange={this.updateSearchQuery} style={{marginTop:'25px'},{textAlign:'center'}}/>
+            <Form.Control type="text" placeholder="Enter a city name" onChange={this.updateSearchQuery} style={{ marginTop: '25px' }, { textAlign: 'center' }} />
           </Form.Group>
-          <Button variant="primary" type="submit" style={{marginTop:'25px'}}>
+          <Button variant="primary" type="submit" style={{ marginTop: '25px' }}>
             Explore!
           </Button>
         </Form>
@@ -95,7 +121,7 @@ class App extends React.Component {
           <Card style={{ width: '18rem' }}>
             <Card.Img variant="top" src={`https://maps.locationiq.com/v3/staticmap?key=pk.9d61ed09f54a2a10035cdf02333644df&center=${this.state.locationData.lat},${this.state.locationData.lon}`} alt={this.state.locationData.display_name} />
 
-            <Card.Body style={{textAlign:'center'}}>
+            <Card.Body style={{ textAlign: 'center' }}>
               <Card.Title>{this.state.locationData.display_name}</Card.Title>
               <Card.Text>
                 {this.state.locationData.lat} <br></br>
@@ -111,7 +137,10 @@ class App extends React.Component {
           </Alert>
         }
 
-        <Weather weatherData={this.state.weatherData} showWeather={this.state.showWeather} />
+          <Weather weatherData={this.state.weatherData} showWeather={this.state.showWeather} />
+      
+          <Movie movieData={this.state.movieData} showMovie={this.state.showMovie} />
+        
 
       </>
     )
