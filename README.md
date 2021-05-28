@@ -18,3 +18,15 @@ If you want to have the location for a city just enter the city name and click o
 01-01-2001 4:59pm - Application now has a fully-functional express server, with a GET route for the location resource. -->
 
 ## Credit and Collaborations
+
+**Time Estimate**            
+
+Name of feature: Hitting locationIQ and get the data.
+
+Estimate of time needed to complete: 6 hours
+
+Start time: 2pm 
+
+Finish time: 10pm 
+
+Actual time needed to complete: 8 hours
