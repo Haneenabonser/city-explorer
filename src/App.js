@@ -9,7 +9,6 @@ import Alert from 'react-bootstrap/Alert';
 import Movie from './Movie.js';
 
 
-
 class App extends React.Component {
 
   constructor(props) {
@@ -124,8 +123,8 @@ class App extends React.Component {
             <Card.Body style={{ textAlign: 'center' }}>
               <Card.Title>{this.state.locationData.display_name}</Card.Title>
               <Card.Text>
-                {this.state.locationData.lat} <br></br>
-                {this.state.locationData.lon}
+                Latitude : {this.state.locationData.lat} <br></br>
+                Longitude : {this.state.locationData.lon}
               </Card.Text>
             </Card.Body>
           </Card>
@@ -137,10 +136,31 @@ class App extends React.Component {
           </Alert>
         }
 
-          <Weather weatherData={this.state.weatherData} showWeather={this.state.showWeather} />
-      
-          <Movie movieData={this.state.movieData} showMovie={this.state.showMovie} />
-        
+
+        {this.state.showMap &&
+
+          <h2>Weather for 16 Days</h2>}
+
+        {this.state.showMap && this.state.weatherData.map((weather, idx) => (
+
+          <Weather showWeather={this.state.showWeather}
+            key={idx}
+            weather={weather}
+          />
+        ))
+        }
+
+        {this.state.showMap &&
+          <h2>List of movies </h2>}
+
+        {this.state.showMap && this.state.movieData.map((movie, idx) => (
+
+          <Movie showMovie={this.state.showMovie}
+            key={idx}
+            movie={movie}
+          />
+        ))
+        }
 
       </>
     )
