@@ -8,25 +8,33 @@ import Card from 'react-bootstrap/Card';
 class Movie extends React.Component {
     render() {
         return (
-            <>
-                {this.props.movieData.length !== 0 && this.props.showMovie &&
-                
-                    <Card style={{ width: '18rem' }}>
-                        <Card.Img variant="top" src={this.props.movieData.image_url} alt={this.props.movieData.title} />
+            <div style={{ display: 'inline-block' }}>
+                { this.props.showMovie &&
+
+                    <Card className='movies' style={{ width: '18rem' }}>
+                        <Card.Img variant="top" src={this.props.movie.image_url} alt={this.props.movie.title} style={{ height: '20rem' }}/>
 
                         <Card.Body style={{ textAlign: 'center' }}>
-                            <Card.Title>{this.props.movieData.title}</Card.Title>
+                            <Card.Title>{this.props.movie.title}</Card.Title>
+                            {/* <Card.Text>
+                                Overview: {this.props.movie.overview}
+                            </Card.Text> */}
                             <Card.Text>
-                                {this.props.movieData[0].overview} <br></br>
-                                {this.props.movieData[0].average_votes} <br></br>
-                                {this.props.movieData[0].total_votes} <br></br>
-                                {this.props.movieData[0].popularity} <br></br>
-                                {this.props.movieData[0].released_on}
+                                Avg Votes: {this.props.movie.average_votes}
+                            </Card.Text>
+                            <Card.Text>
+                                Total Votes: {this.props.movie.total_votes}
+                            </Card.Text>
+                            <Card.Text>
+                                Popularity:  {this.props.movie.popularity}
+                            </Card.Text>
+                            <Card.Text>
+                                Released on: {this.props.movie.released_on}
                             </Card.Text>
                         </Card.Body>
                     </Card>
                 }
-            </>
+            </div>
         )
     }
 
